@@ -1,0 +1,7 @@
+{
+  "name": "smartsheet-oauth-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
