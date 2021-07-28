@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl:'https://smartsheet-oauth-backend.herokuapp.com',
+  authUrl:'https://smartsheet-oauth-backend.herokuapp.com/auth',
+  appClientId:'67de5tmgmp98wjupy14',
+  appSecret:'c3phitlg25ex8fytn40',
+  accessScope:'WRITE_SHEETS READ_SHEETS'
 };
 
 /*

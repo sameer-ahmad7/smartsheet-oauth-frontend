@@ -1,0 +1,23 @@
+.avatar-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background: steelblue;
+  ion-avatar {
+    height: 133px;
+    width: 130px;
+  }
+}
+
+.profile-card {
+  height: 219px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+ion-footer {
+  margin-bottom: 16px;
+  padding: 16px;
+}

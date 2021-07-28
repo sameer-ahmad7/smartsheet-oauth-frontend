@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <app-popover-menu></app-popover-menu>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="(userData$ | async) as profile">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-card class="avatar-card">
+          <ion-avatar>
+            <img [src]="profile.profileImage || 'assets/images/avatar.jpg'" />
+          </ion-avatar>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-card class="profile-card">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label>
+                <h2>Email</h2>
+                <p>{{profile.email}}</p>
+              </ion-label>
+            </ion-item>
+
+            <ion-item lines="none">
+              <ion-label>
+                <h2>Name</h2>
+                <p>{{profile.firstName}} {{profile.lastName}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-button (click)="logout()" color="danger" expand="block" fill="solid"
+        >Logout</ion-button
+      >
+    </ion-col>
+  </ion-row>
+</ion-footer> -->
