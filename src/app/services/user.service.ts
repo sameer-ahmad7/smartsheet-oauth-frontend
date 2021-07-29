@@ -19,6 +19,7 @@ export class UserService implements OnDestroy {
   private isAuthenticated = false;
   private token: string;
   private tokenTimer: any;
+  private imageTimer: any;
   private refreshToken: string;
   private authStatusListener = new BehaviorSubject<boolean>(false);
   private authError = new Subject<string>();
@@ -27,7 +28,13 @@ export class UserService implements OnDestroy {
     private http: HttpClient,
     private router: Router,
     private platform: Platform
-  ) {}
+  ) {
+    this.getAuthStatusListener().subscribe((isAuth) => {
+      if (isAuth) {
+        this.getCurrentUser();
+      }
+    });
+  }
 
   getToken() {
     return this.token;
@@ -59,6 +66,9 @@ export class UserService implements OnDestroy {
       .pipe(take(1))
       .subscribe((user) => {
         if (user) {
+          if (user.imageExpiresIn > 0) {
+            this.setImageTimer(+user.imageExpiresIn);
+          }
           this.userData.next(user);
         }
       });
@@ -112,11 +122,18 @@ export class UserService implements OnDestroy {
     this.authStatusListener.next(false);
     this.clearAuthData();
     clearTimeout(this.tokenTimer);
+    clearTimeout(this.imageTimer);
     this.router.navigate(['/login'], { replaceUrl: true });
   }
 
   ngOnDestroy() {
     this.logout();
+  }
+
+  private setImageTimer(duration: number) {
+    this.imageTimer = setTimeout(() => {
+      this.getCurrentUser();
+    }, duration);
   }
 
   private setAuthTimer(duration: number) {
