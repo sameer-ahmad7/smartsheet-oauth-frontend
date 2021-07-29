@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgZone } from '@angular/core';
 import { Plugins } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 import { UserService } from './services/user.service';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -15,10 +16,17 @@ const { App } = Plugins;
 export class AppComponent {
   constructor(
     private userService: UserService,
+    private platform: Platform,
     private zone: NgZone,
     private http: HttpClient
   ) {
-    this.initializeApp();
+    if (
+      (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
+      this.platform.is('desktop')
+    ) {
+    } else {
+      this.initializeApp();
+    }
   }
   initializeApp() {
     App.addListener('appUrlOpen', (data: any) => {

@@ -107,6 +107,17 @@ export class UserService implements OnDestroy {
     return false;
   }
 
+  checkUserOrganization(token: string) {
+    return this.http.post<{
+      accessToken: string;
+      refreshToken: string;
+      expiresIn: number;
+    }>(this.authUrl + '/' + token, {
+      appSecret: environment.appSecret,
+      appClientId: environment.appClientId,
+    });
+  }
+
   refreshAccessToken() {
     return this.http.post<{
       accessToken: string;
@@ -139,13 +150,20 @@ export class UserService implements OnDestroy {
   private setAuthTimer(duration: number) {
     console.log('Setting timer: ' + duration);
     this.tokenTimer = setTimeout(() => {
-      this.refreshAccessToken()
-        .pipe(take(1))
-        .subscribe((resp) => {
-          if (resp) {
-            this.login(resp.accessToken, resp.refreshToken, +resp.expiresIn);
-          }
-        });
+      if (
+        (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
+        this.platform.is('desktop')
+      ) {
+        this.logout();
+      } else {
+        this.refreshAccessToken()
+          .pipe(take(1))
+          .subscribe((resp) => {
+            if (resp) {
+              this.login(resp.accessToken, resp.refreshToken, +resp.expiresIn);
+            }
+          });
+      }
     }, duration * 1000);
   }
 
