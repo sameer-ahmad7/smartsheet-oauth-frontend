@@ -8,9 +8,10 @@ import { PopoverComponent } from '../popover/popover.component';
   styleUrls: ['./popover-menu.component.scss'],
 })
 export class PopoverMenuComponent implements OnInit {
+  @Input() pageTitle: string;
+  @Input() defaultHref: string;
 
-
-  constructor(public popoverController: PopoverController) { }
+  constructor(public popoverController: PopoverController) {}
 
   ngOnInit() {}
 
@@ -18,12 +19,11 @@ export class PopoverMenuComponent implements OnInit {
     const popover = await this.popoverController.create({
       component: PopoverComponent,
       event: ev,
-      translucent: true
+      translucent: true,
     });
     await popover.present();
 
     const { role } = await popover.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
-
 }

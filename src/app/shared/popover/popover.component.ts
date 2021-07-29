@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 
@@ -8,15 +9,21 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./popover.component.scss'],
 })
 export class PopoverComponent implements OnInit {
-
-  constructor(private userService: UserService,public popoverController: PopoverController) { }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    public popoverController: PopoverController
+  ) {}
 
   ngOnInit() {}
 
-  logout(){
+  logout() {
     this.userService.logout();
     this.popoverController.dismiss();
   }
 
-
+  profile() {
+    this.router.navigate(['/profile']);
+    this.popoverController.dismiss();
+  }
 }

@@ -1,4 +1,10 @@
 <ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button
+      *ngIf="defaultHref"
+      [defaultHref]="defaultHref"
+    ></ion-back-button>
+  </ion-buttons>
   <ion-buttons slot="end">
     <ion-button (click)="presentPopover($event)">
       <ion-icon
@@ -8,4 +14,5 @@
       ></ion-icon>
     </ion-button>
   </ion-buttons>
+  <ion-title> {{ pageTitle }} </ion-title>
 </ion-toolbar>

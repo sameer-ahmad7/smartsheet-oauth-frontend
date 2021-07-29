@@ -5,25 +5,33 @@ import { NoAuthRedirectGuard } from './auth/no-auth-redirect.guard';
 
 const routes: Routes = [
   {
-    path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
-    canLoad:[AuthGuard]
+    path: 'home',
+    loadChildren: () =>
+      import('./home/home.module').then((m) => m.HomePageModule),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfilePageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
-    canLoad:[NoAuthRedirectGuard]
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginPageModule),
+    canLoad: [NoAuthRedirectGuard],
   },
   {
-    path:'',
-    pathMatch:'full',
-    redirectTo:'tabs'
-  }
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+  },
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
